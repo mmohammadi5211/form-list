@@ -16,16 +16,22 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal() {
-  const [open, setOpen] = React.useState(true);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+interface Props {
+  openModal: boolean;
+  close: React.Dispatch<React.SetStateAction<boolean>>;
+}
+export default function BasicModal(props: Props) {
+  // const [open, setOpen] = React.useState(true);
+  // const handleOpen = () => setOpen(true);
+  const handleClose = () => props.close(false);
+
+  // setOpen(false);
 
   return (
     <div>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
-        open={open}
+        open={props.openModal}
         onClose={handleClose}
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'>

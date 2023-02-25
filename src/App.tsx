@@ -15,7 +15,6 @@ export type CardType = {
 };
 function App() {
   const [cards, setCards] = React.useState<CardType[]>([]);
-  const [showModal, setShowModal] = React.useState(false);
 
   const addCard = (value: Value) => {
     setCards((perv) => [
@@ -39,10 +38,9 @@ function App() {
         <Stack spacing={3}>
           <FormSection
             addCard={addCard}
-            showModal={setShowModal}
+            // showModal={setShowModal}
           />
           <ListSection cards={cards} />
-          {showModal && <BasicModal />}
         </Stack>
       </Box>
     </>

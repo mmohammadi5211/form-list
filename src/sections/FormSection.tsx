@@ -4,31 +4,39 @@ import BasicModal from '../components/modals/Modal';
 
 interface Props {
   addCard: (params: { name: string; age: string }) => void;
-  showModal: Dispatch<SetStateAction<boolean>>;
+  // showModal: Dispatch<SetStateAction<boolean>>;
 }
 const FormSection = (props: Props) => {
   const [name, setName] = React.useState<string>('');
   const [age, setAge] = React.useState<string>('');
-  // const [showModal, setShowModal] = React.useState(false);
+  const [showModal, setShowModal] = React.useState(false);
 
-  const handleForm = () => {
-    if (name.length > 0 && age.length > 0) {
-      const setForm = {
-        name: name,
-        age: age,
-      };
-      props.addCard(setForm);
-      setAge('');
-      setName('');
+  const handleForm = (e: any) => {
+    e.preventDefault();
+    if (name.trim().length === 0 || age.trim().length === 0) {
+      setShowModal(true);
+      return;
     }
-    if (name.length === 0 || age.length === 0) {
-      props.showModal(true);
-    }
+
+    const setForm = {
+      name: name,
+      age: age,
+    };
+    props.addCard(setForm);
+    setAge('');
+    setName('');
   };
 
   return (
     <>
-      <Box>
+      <form onSubmit={handleForm}>
+        {showModal && (
+          <BasicModal
+            openModal={showModal}
+            close={setShowModal}
+          />
+        )}
+
         <Stack
           spacing={1}
           alignItems={'baseline'}
@@ -44,13 +52,15 @@ const FormSection = (props: Props) => {
             onChange={(e) => setAge(e.target.value)}
           />
           <Button
+            type='submit'
             variant='contained'
             fullWidth
-            onClick={handleForm}>
+            // onClick={handleForm}
+          >
             Add
           </Button>
         </Stack>
-      </Box>
+      </form>
     </>
   );
 };
